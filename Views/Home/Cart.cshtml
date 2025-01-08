@@ -1,5 +1,102 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model List<garage.Models.Cart>
+
+<!-- Portfolio Section -->
+<section id="portfolio" class="portfolio section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Cart</h2>
+        <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+        </p>
+    </div><!-- End Section Title -->
+
+    <div class="container">
+
+        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
+            <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+                <li data-filter="*" class="filter-active">All</li>
+            </ul><!-- End Portfolio Filters -->
+
+            <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-@(item.Product?.Cat?.Name?.ToLower() ?? "unknown")">
+                            <div class="portfolio-content h-100">
+                                <a href="@item.Product?.Photo" data-gallery="portfolio-gallery-@(item.Product?.Cat?.Name?.ToLower() ?? "unknown")" class="glightbox">
+                                    <img src="@item.Product?.Photo" class="img-fluid" alt="">
+                                </a>
+                                <div class="portfolio-info">
+                                    <div class="portfolio-info d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h4><a href="portfolio-details.html" title="More Details">@item.Product?.Name</a></h4>
+                                            <p>@item.Product?.Description</p>
+                                            <p>Quantity: @item.Qty</p>
+                                        </div>
+                                        <button class="btn btn-danger remove-from-cart" data-cart-id="@item.Id"><i class="bi bi-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End Portfolio Item -->
+                    }
+                }
+            </div><!-- End Portfolio Container -->
+
+            <a href="#" id="save-cart" style="display: block; text-align: center; background-color: #f8f9fa; font-weight: bold; padding: 10px; margin-top: 20px;">commander maintenant</a>
+
+        </div>
+
+    </div>
+    <partial name="_LoginPartial" />
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.remove-from-cart').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var cartId = this.getAttribute('data-cart-id');
+                fetch('/Home/RemoveFromCart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    },
+                    body: JSON.stringify({ cartId: cartId })
+                }).then(response => {
+                    if (response.ok) {
+                        alert('Product removed from cart');
+                        location.reload();
+                    } else {
+                        response.text().then(text => {
+                            alert('Failed to remove product from cart: ' + text);
+                        });
+                    }
+                });
+            });
+        });
+
+        document.getElementById('save-cart').addEventListener('click', function (event) {
+            event.preventDefault();
+            fetch('/Home/SaveCart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                }
+            }).then(response => {
+                if (response.ok) {
+                    alert('Cart saved successfully');
+                } else {
+                    alert('Failed to save cart');
+                }
+            });
+        });
+    });
+</script>
+
+

@@ -1,11 +1,4 @@
-﻿
-
-
-
-
-
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -58,9 +51,9 @@
                 <ul>
                     <li><a href="#hero" class="active">Home</a></li>
                     <li><a href="#about">About</a></li>
-                    <li><a asp-controller="Home" asp-action="Categories">Categories</a></li>
-                    <li href="#portfolio"><a asp-controller="Home" asp-action="Index">Portfolio</a></li>
-                    <li><a href="#team">Team</a></li>
+                    <li><a id="categories-link" asp-controller="Home" asp-action="Categories">Categories</a></li>
+                    <li><a id="products-link" asp-controller="Home" asp-action="Index">Products</a></li>
+                    <li><a id="cart-link" asp-controller="Home" asp-action="Cart">Cart</a></li>
                     <li class="dropdown">
                         <a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
@@ -86,6 +79,7 @@
             </nav>
 
             <a class="btn-getstarted" href="#about">Get Started</a>
+            <partial name="_LoginPartial" />
 
         </div>
     </header>
@@ -187,8 +181,9 @@
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Preloader -->
+    <!-- Preloader -->  
     <div id="preloader"></div>
+    
 
     <!-- Vendor JS Files -->
     <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -203,6 +198,35 @@
     <!-- Main JS File -->
     <script src="~/assets/js/main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <style>
+        .main {
+            padding: 50px;
+        }
+    </style>
+    <script>
+        document.getElementById('categories-link').addEventListener('click', function (event) {
+            event.preventDefault();
+            window.location.href = '@Url.Action("Categories", "Home")#services';
+        });
+
+        document.getElementById('products-link').addEventListener('click', function (event) {
+            event.preventDefault();
+            window.location.href = '@Url.Action("Index", "Home")#portfolio';
+        });
+
+        document.getElementById('cart-link').addEventListener('click', function (event) {
+            event.preventDefault();
+            window.location.href = '@Url.Action("Cart", "Home")#portfolio';
+        });
+
+        // Scroll to the appropriate section if the URL contains the hash
+        window.addEventListener('load', function () {
+            if (window.location.hash) {
+                document.querySelector(window.location.hash).scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    </script>
+
 </body>
 
 </html>
