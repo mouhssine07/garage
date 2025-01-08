@@ -1,0 +1,21 @@
+﻿@model garage.Models.Cart
+
+<h2>Remove Product</h2>
+
+<h3>Are you sure you want to remove this product from your cart?</h3>
+<div>
+    <h4>@Model.Product?.Name</h4>
+    <p>@Model.Product?.Description</p>
+    <p>Quantity: @Model.Qty</p>
+</div>
+
+<form asp-action="RemoveConfirmed" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <button type="submit" class="btn btn-danger">Remove</button>
+    <a asp-action="Cart" asp-controller="Home" class="btn btn-secondary">Cancel</a>
+</form>
+
+
+
+
+

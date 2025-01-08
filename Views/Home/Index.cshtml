@@ -44,7 +44,10 @@
                                             <h4><a href="portfolio-details.html" title="More Details">@item.Name</a></h4>
                                             <p>@item.Description</p>
                                         </div>
-                                        <button class="btn btn-primary add-to-cart" data-product-id="@item.Id"><i class="bi bi-basket"></i></button>
+                                        <form asp-controller="Cart" asp-action="AddProduct" method="post">
+                                            <input type="hidden" name="productId" value="@item.Id" />
+                                            <button type="submit" class="btn btn-primary"><i class="bi bi-basket"></i></button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -60,29 +63,3 @@
     </div>
 
 </section><!-- /Portfolio Section -->
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.add-to-cart').forEach(function (button) {
-            button.addEventListener('click', function () {
-                var productId = this.getAttribute('data-product-id');
-                fetch('/Home/AddToCart', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                    },
-                    body: JSON.stringify({ productId: productId })
-                }).then(response => {
-                    if (response.ok) {
-                        alert('Product added to cart');
-                    } else {
-                        alert('Failed to add product to cart');
-                    }
-                });
-            });
-        });
-    });
-</script>
-
-

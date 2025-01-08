@@ -78,41 +78,6 @@ namespace garage.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
-
-        [HttpPost]
-        public async Task<IActionResult> RemoveFromCart(int cartId)
-        {
-            var cartItem = await _context.Carts.FindAsync(cartId);
-            if (cartItem != null)
-            {
-                _context.Carts.Remove(cartItem);
-                await _context.SaveChangesAsync();
-                return Ok();
-            }
-
-            return BadRequest("Cart item not found");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> SaveCart()
-        {
-            var userId = _userManager.GetUserId(User);
-            var cartItems = await _context.Carts
-                .Where(c => c.UserId == userId)
-                .ToListAsync();
-
-            // Implement logic to save the cart to the database if needed
-            // For example, you can update the status of the cart items or create an order
-
-            await _context.SaveChangesAsync();
-            return Ok();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }
 

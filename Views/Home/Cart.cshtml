@@ -34,9 +34,8 @@
                                         <div>
                                             <h4><a href="portfolio-details.html" title="More Details">@item.Product?.Name</a></h4>
                                             <p>@item.Product?.Description</p>
-                                            <p>Quantity: @item.Qty</p>
+                                            <p class="mt-4 text-primary">Quantity: @item.Qty</p>
                                         </div>
-                                        <button class="btn btn-danger remove-from-cart" data-cart-id="@item.Id"><i class="bi bi-trash"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -57,10 +56,33 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.update-qty').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var cartId = this.getAttribute('data-cart-id');
+                var action = this.getAttribute('data-action');
+                fetch('/Cart/UpdateQuantity', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    },
+                    body: JSON.stringify({ cartId: cartId, action: action })
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        response.text().then(text => {
+                            alert('Failed to update quantity: ' + text);
+                        });
+                    }
+                });
+            });
+        });
+
         document.querySelectorAll('.remove-from-cart').forEach(function (button) {
             button.addEventListener('click', function () {
                 var cartId = this.getAttribute('data-cart-id');
-                fetch('/Home/RemoveFromCart', {
+                fetch('/Cart/RemoveFromCart', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -82,7 +104,7 @@
 
         document.getElementById('save-cart').addEventListener('click', function (event) {
             event.preventDefault();
-            fetch('/Home/SaveCart', {
+            fetch('/Cart/SaveCart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -91,6 +113,7 @@
             }).then(response => {
                 if (response.ok) {
                     alert('Cart saved successfully');
+                    location.reload();
                 } else {
                     alert('Failed to save cart');
                 }
@@ -98,5 +121,10 @@
         });
     });
 </script>
+
+
+
+
+
 
 
