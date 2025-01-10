@@ -14,6 +14,7 @@ namespace garage.Areas.Identity.Data
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -41,9 +42,18 @@ namespace garage.Areas.Identity.Data
                 entity.HasOne(e => e.Cat)
                       .WithMany(c => c.Products)
                       .HasForeignKey(e => e.Catid);
+                entity.Property(e => e.Price)
+                      .HasColumnType("decimal(18,2)"); // Specify precision and scale
+            });
+
+            builder.Entity<Contact>(entity =>
+            {
+                entity.ToTable("Contacts");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Email).IsRequired();
+                entity.Property(e => e.Message).IsRequired().HasMaxLength(500);
             });
         }
     }
 }
-
-

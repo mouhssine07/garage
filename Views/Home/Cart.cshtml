@@ -56,51 +56,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.update-qty').forEach(function (button) {
-            button.addEventListener('click', function () {
-                var cartId = this.getAttribute('data-cart-id');
-                var action = this.getAttribute('data-action');
-                fetch('/Cart/UpdateQuantity', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                    },
-                    body: JSON.stringify({ cartId: cartId, action: action })
-                }).then(response => {
-                    if (response.ok) {
-                        location.reload();
-                    } else {
-                        response.text().then(text => {
-                            alert('Failed to update quantity: ' + text);
-                        });
-                    }
-                });
-            });
-        });
-
-        document.querySelectorAll('.remove-from-cart').forEach(function (button) {
-            button.addEventListener('click', function () {
-                var cartId = this.getAttribute('data-cart-id');
-                fetch('/Cart/RemoveFromCart', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                    },
-                    body: JSON.stringify({ cartId: cartId })
-                }).then(response => {
-                    if (response.ok) {
-                        alert('Product removed from cart');
-                        location.reload();
-                    } else {
-                        response.text().then(text => {
-                            alert('Failed to remove product from cart: ' + text);
-                        });
-                    }
-                });
-            });
-        });
 
         document.getElementById('save-cart').addEventListener('click', function (event) {
             event.preventDefault();

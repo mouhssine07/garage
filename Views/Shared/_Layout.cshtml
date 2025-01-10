@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Index - Techie Bootstrap Template</title>
+    <title>Index - Garage </title>
     <meta name="description" content="">
     <meta name="keywords" content="">
 
@@ -49,36 +49,16 @@
 
             <nav id="navmenu" class="navmenu">
                 <ul>
-                    <li><a href="#hero" class="active">Home</a></li>
-                    <li><a href="#about">About</a></li>
+                    <li><a id="products-link" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a id="categories-link" asp-controller="Home" asp-action="Categories">Categories</a></li>
                     <li><a id="products-link" asp-controller="Home" asp-action="Index">Products</a></li>
                     <li><a id="cart-link" asp-controller="Home" asp-action="Cart">Cart</a></li>
-                    <li class="dropdown">
-                        <a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li><a href="#">Dropdown 1</a></li>
-                            <li class="dropdown">
-                                <a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                                <ul>
-                                    <li><a href="#">Deep Dropdown 1</a></li>
-                                    <li><a href="#">Deep Dropdown 2</a></li>
-                                    <li><a href="#">Deep Dropdown 3</a></li>
-                                    <li><a href="#">Deep Dropdown 4</a></li>
-                                    <li><a href="#">Deep Dropdown 5</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Dropdown 2</a></li>
-                            <li><a href="#">Dropdown 3</a></li>
-                            <li><a href="#">Dropdown 4</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a id="Contact-link" asp-controller="Contact" asp-action="Index">Contact</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
 
-            <a class="btn-getstarted" href="#about">Get Started</a>
+            <a class="btn-getstarted" id="products-link" asp-controller="Home" asp-action="Index">Get Started</a>
             <partial name="_LoginPartial" />
 
         </div>
@@ -90,10 +70,10 @@
         <div class="container">
             <div class="row gy-4">
                 <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
-                    <h1>Bettter Digital Experience With Techie</h1>
+                    <h1>Bettter Digital Experience With Garage</h1>
                     <p>We are team of talented designers making websites with Bootstrap</p>
                     <div class="d-flex">
-                        <a href="#about" class="btn-get-started">Get Started</a>
+                        <a id="products-link" asp-controller="Home" asp-action="Index" class="btn-get-started">Get Started</a>
                     </div>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 hero-img">
@@ -120,7 +100,7 @@
             <div class="row gy-4">
                 <div class="col-lg-5 col-md-12 footer-about">
                     <a href="index.html" class="logo d-flex align-items-center">
-                        <span class="sitename">Techie</span>
+                        <span class="sitename">Garage</span>
                     </a>
                     <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
                     <div class="social-links d-flex mt-4">
@@ -166,7 +146,7 @@
         </div>
 
         <div class="container copyright text-center mt-4">
-            <p>© <span>Copyright</span> <strong class="px-1 sitename">Techie</strong> <span>All Rights Reserved</span></p>
+            <p>© <span>Copyright</span> <strong class="px-1 sitename">Garage</strong> <span>All Rights Reserved</span></p>
             <div class="credits">
                 <!-- All the links in the footer should remain intact. -->
                 <!-- You can delete the links only if you've purchased the pro version. -->
@@ -211,12 +191,16 @@
 
         document.getElementById('products-link').addEventListener('click', function (event) {
             event.preventDefault();
-            window.location.href = '@Url.Action("Index", "Home")#portfolio';
+            window.location.href = '@Url.Action("Index", "Home")#portfolio1';
         });
 
         document.getElementById('cart-link').addEventListener('click', function (event) {
             event.preventDefault();
             window.location.href = '@Url.Action("Cart", "Home")#portfolio';
+        });
+         document.getElementById('Contact-link').addEventListener('click', function (event) {
+            event.preventDefault();
+            window.location.href = '@Url.Action("Index", "Contact")#former';
         });
 
         // Scroll to the appropriate section if the URL contains the hash
